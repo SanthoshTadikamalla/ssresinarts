@@ -160,10 +160,12 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
                   type="tel"
                   autoComplete="tel"
                   required
-                  pattern="[0-9]{8,15}"
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  minLength={10}
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
-                  placeholder="Your contact number"
+                  placeholder="10-digit contact number"
                 />
               </label>
               <label>

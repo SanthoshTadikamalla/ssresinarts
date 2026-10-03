@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Heart, ShoppingCart, Star, X } from 'lucide-react';
+import { ArrowRight, Heart, Minus, Plus, ShoppingCart, Star, X } from 'lucide-react';
 
 const categories = [
   { label: 'Photo Frames', category: 'Photo Frames & Coasters', image: '/images/scallop_frame.jpg' },
@@ -28,11 +28,17 @@ const getDiscountPercent = (price, originalPrice) => {
   return Math.round(((original - actual) / original) * 100);
 };
 
-export default function ClientShowcase({ searchQuery = '', onAddToCart }) {
+export default function ClientShowcase({
+  searchQuery = '',
+  onAddToCart,
+  cartItems = [],
+  onChangeCartQuantity,
+  wishlistItems = [],
+  onToggleWishlist,
+}) {
   const [catalog, setCatalog] = useState([]);
   const [activeCategory, setActiveCategory] = useState('Featured');
   const [selectedItem, setSelectedItem] = useState(null);
-  const [likedItems, setLikedItems] = useState({});
 
   useEffect(() => {
     fetch('/images/catalog.json')
@@ -57,11 +63,6 @@ export default function ClientShowcase({ searchQuery = '', onAddToCart }) {
     ? categoryItems.filter((item) =>
       `${item.title} ${item.category} ${item.description}`.toLowerCase().includes(normalizedSearch))
     : categoryItems;
-
-  const handleOrder = (item) => {
-    const text = `Hi SS Creation! I am interested in ordering "${item.title}" (${item.price}). Please share customization details.`;
-    window.open(`https://wa.me/919392292616?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
-  };
 
   return (
     <section id="client-view" className="store-shop">
@@ -99,59 +100,90 @@ export default function ClientShowcase({ searchQuery = '', onAddToCart }) {
         {visibleItems.length ? (
           <motion.div layout className="store-product-grid">
             <AnimatePresence>
-              {visibleItems.map((item) => (
-                <motion.article
-                  layout
-                  key={item.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.2 }}
-                  className="store-product-card"
-                  onClick={() => setSelectedItem(item)}
-                >
-                  <div className="store-product-photo">
-                    <img src={item.path} alt={item.title} loading="lazy" />
-                    {getDiscountPercent(item.price, item.originalPrice) && (
-                      <span className="store-sale-badge">{getDiscountPercent(item.price, item.originalPrice)}% OFF</span>
-                    )}
-                    <button
-                      type="button"
-                      className={`store-like${likedItems[item.id] ? ' liked' : ''}`}
-                      aria-label={likedItems[item.id] ? 'Remove from favourites' : 'Add to favourites'}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setLikedItems((current) => ({ ...current, [item.id]: !current[item.id] }));
-                      }}
-                    >
-                      <Heart size={16} fill={likedItems[item.id] ? 'currentColor' : 'none'} />
-                    </button>
-                  </div>
-                  <div className="store-product-details">
-                    <span className="store-product-category">{item.category}</span>
-                    <h3>{item.title}</h3>
-                    <div className="store-product-rating">
-                      <Star size={13} fill="currentColor" />
-                      <span>{item.rating || '5.0'}</span>
-                      <span className="store-review-count">({item.reviewsCount || 42})</span>
+              {visibleItems.map((item) => {
+                const quantity = cartItems.find((cartItem) => cartItem.id === item.id)?.quantity || 0;
+                return (
+                  <motion.article
+                    layout
+                    key={item.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.2 }}
+                    className="store-product-card"
+                    onClick={() => setSelectedItem(item)}
+                  >
+                    <div className="store-product-photo">
+                      <img src={item.path} alt={item.title} loading="lazy" />
+                      {getDiscountPercent(item.price, item.originalPrice) && (
+                        <span className="store-sale-badge">{getDiscountPercent(item.price, item.originalPrice)}% OFF</span>
+                      )}
+                      <button
+                        type="button"
+                        className={`store-like${wishlistItems.some((savedItem) => savedItem.id === item.id) ? ' liked' : ''}`}
+                        aria-label={wishlistItems.some((savedItem) => savedItem.id === item.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onToggleWishlist(item);
+                        }}
+                      >
+                        <Heart
+                          size={16}
+                          fill={wishlistItems.some((savedItem) => savedItem.id === item.id) ? 'currentColor' : 'none'}
+                        />
+                      </button>
                     </div>
-                    <div className="store-product-price">
-                      <strong>{item.price}</strong>
-                      {item.originalPrice && <del>{item.originalPrice}</del>}
+                    <div className="store-product-details">
+                      <span className="store-product-category">{item.category}</span>
+                      <h3>{item.title}</h3>
+                      <div className="store-product-rating">
+                        <Star size={13} fill="currentColor" />
+                        <span>{item.rating || '5.0'}</span>
+                        <span className="store-review-count">({item.reviewsCount || 42})</span>
+                      </div>
+                      <div className="store-product-price">
+                        <strong>{item.price}</strong>
+                        {item.originalPrice && <del>{item.originalPrice}</del>}
+                      </div>
+                      {quantity > 0 ? (
+                        <div
+                          className="store-card-quantity"
+                          role="group"
+                          aria-label={`${item.title} quantity in cart`}
+                          onClick={(event) => event.stopPropagation()}
+                        >
+                          <button
+                            type="button"
+                            aria-label={`Remove one ${item.title} from cart`}
+                            onClick={() => onChangeCartQuantity(item.id, quantity - 1)}
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span>{quantity} in cart</span>
+                          <button
+                            type="button"
+                            aria-label={`Add one ${item.title} to cart`}
+                            onClick={() => onAddToCart(item)}
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="store-add-button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onAddToCart(item);
+                          }}
+                        >
+                          <ShoppingCart size={14} /> Add to Cart
+                        </button>
+                      )}
                     </div>
-                    <button
-                      type="button"
-                      className="store-add-button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onAddToCart(item);
-                      }}
-                    >
-                      <ShoppingCart size={14} /> Add to Cart
-                    </button>
-                  </div>
-                </motion.article>
-              ))}
+                  </motion.article>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
         ) : (
@@ -187,8 +219,15 @@ export default function ClientShowcase({ searchQuery = '', onAddToCart }) {
                   <strong>{selectedItem.price}</strong>
                   {selectedItem.originalPrice && <del>{selectedItem.originalPrice}</del>}
                 </div>
-                <button type="button" className="store-add-button" onClick={() => handleOrder(selectedItem)}>
-                  Order on WhatsApp <ArrowRight size={15} />
+                <button
+                  type="button"
+                  className="store-add-button"
+                  onClick={() => {
+                    onAddToCart(selectedItem);
+                    setSelectedItem(null);
+                  }}
+                >
+                  <ShoppingCart size={14} /> Add to Cart
                 </button>
               </div>
             </motion.div>

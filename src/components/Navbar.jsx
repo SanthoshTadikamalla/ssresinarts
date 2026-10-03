@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
+import { Heart, Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 
 export default function Navbar({
   cartCount = 0,
+  wishlistCount = 0,
   searchQuery,
   onSearchChange,
   onOpenCart,
+  onOpenWishlist,
+  onOpenCustomQuote,
+  onOpenContact,
   onNavigateShop,
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,8 +18,8 @@ export default function Navbar({
   const navLinks = [
     { label: 'Home', href: '#home' },
     { label: 'Shop', href: '#client-view' },
-    { label: 'Custom Orders', href: '#contact' },
-    { label: 'About', href: '#client-view' },
+    { label: 'Custom Orders', href: '#custom-orders' },
+    
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -42,7 +46,15 @@ export default function Navbar({
               href={link.href}
               key={link.label}
               className={index === 0 ? 'active' : ''}
-              onClick={() => {
+              onClick={(event) => {
+                if (link.label === 'Custom Orders') {
+                  event.preventDefault();
+                  onOpenCustomQuote();
+                }
+                if (link.label === 'Contact') {
+                  event.preventDefault();
+                  onOpenContact();
+                }
                 if (link.label === 'Home' || link.label === 'Shop') {
                   onNavigateShop();
                 }
@@ -67,6 +79,15 @@ export default function Navbar({
           <a href="#contact" aria-label="Custom orders and account">
             <UserRound />
           </a>
+          <button
+            type="button"
+            className="store-wishlist"
+            aria-label={`Wishlist with ${wishlistCount} items`}
+            onClick={onOpenWishlist}
+          >
+            <Heart />
+            <span>{wishlistCount}</span>
+          </button>
           <button
             type="button"
             className="store-cart"
@@ -107,8 +128,16 @@ export default function Navbar({
             <a
               href={link.href}
               key={link.label}
-              onClick={() => {
+              onClick={(event) => {
                 setMobileMenuOpen(false);
+                if (link.label === 'Custom Orders') {
+                  event.preventDefault();
+                  onOpenCustomQuote();
+                }
+                if (link.label === 'Contact') {
+                  event.preventDefault();
+                  onOpenContact();
+                }
                 if (link.label === 'Home' || link.label === 'Shop') onNavigateShop();
               }}
             >
