@@ -35,7 +35,7 @@ const imageCatalog = [
     id: 0,
     filename: 'hero_banner.jpg',
     path: '/images/hero_banner.jpg',
-    title: 'SS Creation 0118 Studio Collection',
+    title: 'SS   Resinarts Studio Collection',
     category: 'Hero Showcase',
     price: 'Custom Pricing',
     description: 'Luxury handcrafted resin art collection featuring ocean clocks, monograms, and dried floral jewelry.',
@@ -56,7 +56,7 @@ const imageCatalog = [
 ];
 
 const categoryMapping = [
-  { title: 'Official SS Creation 0118 Brochure', category: 'Brochure', price: 'Contact Us', desc: 'Complete product catalog & custom order details flyer.' },
+  { title: 'Official SS   Resinarts Brochure', category: 'Brochure', price: 'Contact Us', desc: 'Complete product catalog & custom order details flyer.' },
   { title: 'Custom Couple Monogram R&S Stand', category: 'Monograms & Names', price: '₹1,299', desc: 'Real preserved red rose petals and 24K leaf gold flakes embedded in crystal resin.' },
   { title: 'Mother & Child Resin Pearl Photo Frame', category: 'Photo Frames & Coasters', price: '₹1,499', desc: 'Handcrafted scalloped frame decorated with freshwater pearls and dried wildflowers.' },
   { title: 'Rose Petal & Gold Leaf Resin Bangle', category: 'Bangles & Jewelry', price: '₹599', desc: 'Ultra-glossy clear resin bangle infused with magenta petals and gold foil sparkles.' },
@@ -87,7 +87,7 @@ images.forEach((file, index) => {
   fs.copyFileSync(srcPath, destPath);
 
   const meta = categoryMapping[index] || {
-    title: `Handcrafted Resin Creation #${index + 1}`,
+    title: `Handcrafted Resin   #${index + 1}`,
     category: 'Bangles & Jewelry',
     price: '₹799',
     desc: 'Unique handcrafted resin art made with love and premium epoxy.'

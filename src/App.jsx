@@ -1,29 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import ResinCustomizer3D from './components/ResinCustomizer3D';
 import ClientShowcase from './components/ClientShowcase';
-import VideoVisualizer from './components/VideoVisualizer';
 import ContactFooter from './components/ContactFooter';
+import CartPage from './components/CartPage';
 
 export default function App() {
+  const [cart, setCart] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showCart, setShowCart] = useState(false);
+
+  const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
+
+  const addToCart = (product) => {
+    setCart((currentCart) => {
+      const existingItem = currentCart.find((item) => item.id === product.id);
+      if (existingItem) {
+        return currentCart.map((item) => (
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        ));
+      }
+      return [...currentCart, { ...product, quantity: 1 }];
+    });
+  };
+
+  const changeQuantity = (itemId, quantity) => {
+    if (quantity < 1) return;
+    setCart((currentCart) => currentCart.map((item) => (
+      item.id === itemId ? { ...item, quantity } : item
+    )));
+  };
+
   return (
-    <div className="w-full min-h-screen bg-white text-black selection:bg-yellow-400 selection:text-black overflow-x-hidden">
-      {/* Top Glass Header Navbar */}
-      <Navbar />
+    <div className="storefront min-h-screen">
+      <Navbar
+        cartCount={cartCount}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onOpenCart={() => {
+          setShowCart(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onNavigateShop={() => setShowCart(false)}
+      />
 
-      {/* Main Hero Section */}
-      <Hero />
-
-
-      {/* Client View & Showcase Gallery */}
-      <ClientShowcase />
-
-      {/* Video Visualizer Workshop Section */}
-      <VideoVisualizer />
-      <ResinCustomizer3D />
-      {/* Contact & Footer Section */}
-      <ContactFooter />
+      {showCart ? (
+        <CartPage
+          items={cart}
+          onQuantityChange={changeQuantity}
+          onRemove={(itemId) => setCart((currentCart) => currentCart.filter((item) => item.id !== itemId))}
+          onContinueShopping={() => setShowCart(false)}
+        />
+      ) : (
+        <>
+          <Hero />
+          <ClientShowcase searchQuery={searchQuery} onAddToCart={addToCart} />
+          <ContactFooter />
+        </>
+      )}
     </div>
   );
 }

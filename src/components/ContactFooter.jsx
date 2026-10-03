@@ -11,7 +11,7 @@ export default function ContactFooter() {
   const handleSubmit = (e) => {
     e.preventDefault();
     confetti({ particleCount: 60, spread: 60 });
-    const text = `Hello SS Creation 0118! 👋
+    const text = `Hello SS   Resinarts! 👋
 Name: ${name}
 Phone: ${phone}
 Interested Product: ${productInterest}
@@ -34,7 +34,7 @@ Please contact me back with details!`;
                 SS
               </div>
               <div>
-                <h3 className="text-2xl font-black text-gradient-gold">SS CREATION 0118</h3>
+                <h3 className="text-2xl font-black text-gradient-gold">SS   Resinarts</h3>
                 <p className="text-xs text-white/60 uppercase tracking-widest font-semibold">Resin Art Specialist</p>
               </div>
             </div>
@@ -63,7 +63,7 @@ Please contact me back with details!`;
               </a>
 
               <a
-                href="https://instagram.com/ss_creation0118"
+                href="https://instagram.com/ss_ Resinarts"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-pink-500 flex items-center gap-4 transition-all group"
@@ -74,7 +74,7 @@ Please contact me back with details!`;
                 <div>
                   <span className="text-[10px] text-white/50 block font-semibold uppercase">Instagram Official</span>
                   <span className="text-sm font-bold text-white group-hover:text-pink-400 transition-colors">
-                    @ss_creation0118
+                    @ss_ Resinarts
                   </span>
                 </div>
               </a>
@@ -97,7 +97,7 @@ Please contact me back with details!`;
               <Sparkles className="w-3.5 h-3.5" /> Instant Custom Quote
             </span>
             <h3 className="text-2xl font-black text-white mb-2">
-              Send a Direct Inquiry to SS Creation 0118
+              Send a Direct Inquiry to SS   Resinarts
             </h3>
             <p className="text-xs text-white/60 mb-6">
               Fill out your requirements below to instantly generate a pre-formatted WhatsApp message for custom orders!
@@ -169,7 +169,7 @@ Please contact me back with details!`;
 
         {/* Footer Copyright */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>© 2026 SS CREATION 0118. All Rights Reserved. Handcrafted with ♥ in India.</p>
+          <p>© 2026 SS   Resinarts. All Rights Reserved. Handcrafted with ♥ in India.</p>
           <div className="flex items-center gap-2 text-pink-400">
             <Heart className="w-4 h-4 fill-pink-400" />
             <span>Thank you for supporting small business!</span>

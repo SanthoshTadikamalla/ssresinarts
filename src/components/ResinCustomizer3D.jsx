@@ -28,7 +28,7 @@ export default function ResinCustomizer3D() {
       origin: { y: 0.6 }
     });
 
-    const message = `Hello SS Creation 0118! 👋 I customized a piece on your 3D Website:
+    const message = `Hello SS   Resinarts! 👋 I customized a piece on your 3D Website:
 - Model Type: ${modelType.toUpperCase()}
 - Resin Color: ${colorOptions.find(c => c.hex === resinColor)?.name || resinColor}
 - Elements: ${hasGoldFoil ? '24K Gold Foil, ' : ''}${hasRosePetals ? 'Dried Rose Petals, ' : ''}${hasPearls ? 'Freshwater Pearls' : ''}

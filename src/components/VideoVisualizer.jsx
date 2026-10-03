@@ -85,7 +85,7 @@ export default function VideoVisualizer() {
       ctx.font = 'bold 20px Outfit, sans-serif';
       ctx.fillStyle = '#ffffff';
       ctx.textAlign = 'center';
-      ctx.fillText('SS CREATION 0118', canvas.width / 2, canvas.height / 2 - 10);
+      ctx.fillText('SS   Resinarts', canvas.width / 2, canvas.height / 2 - 10);
       
       ctx.font = '12px Inter, sans-serif';
       ctx.fillStyle = stepColor;

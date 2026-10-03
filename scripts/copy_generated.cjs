@@ -98,7 +98,7 @@ const catalog = [
   },
   {
     id: 6,
-    title: 'SS Creation 0118 Official Master Flyer',
+    title: 'SS   Resinarts Official Master Flyer',
     category: 'Brochure',
     price: 'Contact Us',
     originalPrice: '',
