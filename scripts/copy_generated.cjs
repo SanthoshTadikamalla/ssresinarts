@@ -84,7 +84,7 @@ const catalog = [
   },
   {
     id: 5,
-    title: 'Luxury Resin Executive Gift Box Hamper',
+    title: 'Gift Box Hamper',
     category: 'Pens & Hampers',
     price: '₹2,999',
     originalPrice: '₹3,999',
