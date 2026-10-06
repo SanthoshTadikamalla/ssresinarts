@@ -88,13 +88,7 @@ export default function ClientShowcase({
             <span className="store-eyebrow">Made with care, just for you</span>
             <h2>{activeCategory === 'Featured' ? 'Featured Products' : activeCategory}</h2>
           </div>
-          <button
-            type="button"
-            className="store-view-all"
-            onClick={() => setActiveCategory(activeCategory === 'All Products' ? 'Featured' : 'All Products')}
-          >
-            {activeCategory === 'All Products' ? 'Featured' : 'View All'} <ArrowRight size={16} />
-          </button>
+         
         </div>
 
         {visibleItems.length ? (
