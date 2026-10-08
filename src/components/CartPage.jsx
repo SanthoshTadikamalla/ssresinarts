@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
-import { getDeliveryCost } from '../pincode';
 import indiaLocations from '../india-states-districts.json';
 
 const formatCurrency = (amount) => `₹${amount.toLocaleString('en-IN')}`;
@@ -19,17 +18,14 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
   const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [pincode, setPincode] = useState('');
   const [orderError, setOrderError] = useState('');
 
   const selectedState = indiaLocations.find((location) => location.state === state);
   const districts = [...(selectedState?.districts || [])].sort((left, right) => left.localeCompare(right));
-  const deliveryCost = getDeliveryCost(pincode);
   const totalAmount = items.reduce((total, item) => {
     const amount = getAmount(item.price);
     return total + (amount === null ? 0 : amount * item.quantity);
   }, 0);
-  const orderTotal = totalAmount + (deliveryCost ?? 0);
   const hasUnpricedItems = items.some((item) => getAmount(item.price) === null);
 
   const handleCheckout = (event) => {
@@ -38,11 +34,6 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
       setOrderError('Add a product to your cart before placing an order.');
       return;
     }
-    if (deliveryCost === undefined) {
-      setOrderError('Delivery is not configured for this PIN code. Please contact us to confirm delivery before ordering.');
-      return;
-    }
-
     const itemLines = items.map((item) => {
       const amount = getAmount(item.price);
       const lineTotal = amount === null ? 'Price on request' : formatCurrency(amount * item.quantity);
@@ -54,8 +45,8 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
       ...itemLines,
       '',
       `Items total: ${formatCurrency(totalAmount)}${hasUnpricedItems ? ' (plus items priced on request)' : ''}`,
-      `Delivery cost: ${formatCurrency(deliveryCost)}`,
-      `Total: ${formatCurrency(orderTotal)}${hasUnpricedItems ? ' (plus items priced on request)' : ''}`,
+      'Delivery charge: To be confirmed',
+      `Order total: ${formatCurrency(totalAmount)}${hasUnpricedItems ? ' (plus items priced on request)' : ''}, excluding delivery`,
       '',
       `Name: ${customerName.trim()}`,
       `Phone: ${phone.trim()}`,
@@ -63,7 +54,6 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
       `City: ${city.trim()}`,
       `District: ${district.trim()}`,
       `State: ${state.trim()}`,
-      `PIN code: ${pincode}`,
     ].join('\n');
 
     setOrderError('');
@@ -222,20 +212,6 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
                     placeholder="City or town"
                   />
                 </label>
-                <label>
-                  PIN code
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    autoComplete="postal-code"
-                    required
-                    pattern="[0-9]{6}"
-                    maxLength={6}
-                    value={pincode}
-                    onChange={(event) => setPincode(event.target.value.replace(/\D/g, '').slice(0, 6))}
-                    placeholder="6-digit PIN"
-                  />
-                </label>
               </div>
 
               <div className="store-order-total">
@@ -244,23 +220,16 @@ export default function CartPage({ items, onQuantityChange, onRemove, onContinue
               </div>
               <div className="store-order-total store-delivery-total">
                 <span>Delivery charge</span>
-                <strong>{deliveryCost === undefined ? 'PIN not supported' : formatCurrency(deliveryCost)}</strong>
-              </div>
-              <div className="store-order-total store-grand-total">
-                <span>Order total</span>
-                <strong>{formatCurrency(orderTotal)}</strong>
+                <strong>To be confirmed</strong>
               </div>
               <p className="store-delivery-note">
-                {deliveryCost === undefined
-                  ? 'Delivery cost is not set for this PIN code. Please contact us before checkout.'
-                  : `Delivery charge for ${pincode}: ${formatCurrency(deliveryCost)}.`}
+                Delivery charges and final total will be confirmed with you on WhatsApp.
                 {hasUnpricedItems && ' Some items need a custom price quote.'}
               </p>
               {orderError && <p className="store-order-error" role="alert">{orderError}</p>}
               <button
                 type="submit"
                 className="store-add-button store-checkout-button"
-                disabled={deliveryCost === undefined}
               >
                 Send order to WhatsApp
               </button>

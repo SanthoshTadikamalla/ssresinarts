@@ -3,22 +3,30 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Heart, Minus, Plus, ShoppingCart, Star, X } from 'lucide-react';
 
 const categories = [
-  { label: 'Photo Frames', category: 'Photo Frames & Coasters', image: '/images/scallop_frame.jpg' },
-  { label: 'Key Chains', category: 'Monograms & Names', image: '/images/heart shape keychain.jpg' },
-  { label: 'Moulds', category: 'Photo Frames & Coasters', image: '/images/heart shape mould.jpg' },
-  { label: 'Pens', category: 'Pens & Hampers', image: '/images/pens.jpg' },
-  { label: 'Earrings', category: 'Bangles & Jewelry', image: '/images/earrings.jpg' },
-  { label: 'Lockets', category: 'Bangles & Jewelry', image: '/images/neckalce set.jpg' },
-  { label: 'Bangles', category: 'Bangles & Jewelry', image: '/images/floral_bangle.jpg' },
-  { label: 'Hampers', category: 'Pens & Hampers', image: '/images/luxury_hamper.jpg' },
+  { label: 'Clocks', category: 'Clocks', image: '/images/clocks/ocean_clock_hero.jpg' },
+  { label: 'Name Stands', category: 'Name Stands', image: '/images/name stands/name stand.jpg' },
+  { label: 'Bangles', category: 'Bangles', image: '/images/bangles/floral_bangle.jpg' },
+  { label: 'Photo Frames', category: 'Photo Frames', image: '/images/photo frames/scallop_frame.jpg' },
+  { label: 'Gift Hampers', category: 'Gift Hampers', image: '/images/gift hampers/hampersss.jpeg' },
+  { label: 'Bookmarks', category: 'Bookmarks', image: '/images/book marks/book msrk.jpeg' },
+  { label: 'Jewelry', category: 'Jewelry', image: '/images/jelwery/chains.jpg' },
+  { label: 'Earrings', category: 'Earrings', image: '/images/earings/earrings.jpg' },
+  { label: 'Keychains', category: 'Keychains', image: '/images/keychain/heart shape keychain.jpg' },
+  { label: 'Pens', category: 'Pens', image: '/images/pens/pens.jpg' },
+  { label: 'Combos', category: 'Combos', image: '/images/combos/combo letter +pen+bookmark.jpg' },
+  { label: 'Rose Preservation', category: 'Rose Preservation', image: '/images/roseprevention/rose prevention.jpg' },
+  { label: 'Wedding Preservation', category: 'Wedding Preservation', image: '/images/wood prevention/wedding prevention.jpg' },
+  { label: 'Mobile Pouches', category: 'Mobile Pouches', image: '/images/mobile pouches/mobile pouch.jpg' },
+  { label: 'Fridge Magnets', category: 'Fridge Magnets', image: '/images/fridge manget/name frigez manget.jpg' },
+  { label: 'Name Boards', category: 'Name Boards', image: '/images/name boards/boards.jpeg' },
 ];
 
 const featuredImagePaths = [
-  '/images/scallop_frame.jpg',
-  '/images/heart shape keychain.jpg',
-  '/images/pens.jpg',
-  '/images/earrings.jpg',
-  '/images/neckalce set.jpg',
+  '/images/photo frames/scallop_frame.jpg',
+  '/images/keychain/heart shape keychain.jpg',
+  '/images/pens/pens.jpg',
+  '/images/earings/earrings.jpg',
+  '/images/jelwery/chains.jpg',
 ];
 
 const getDiscountPercent = (price, originalPrice) => {
@@ -131,9 +139,15 @@ export default function ClientShowcase({
                       <span className="store-product-category">{item.category}</span>
                       <h3>{item.title}</h3>
                       <div className="store-product-rating">
-                        <Star size={13} fill="currentColor" />
-                        <span>{item.rating || '5.0'}</span>
-                        <span className="store-review-count">({item.reviewsCount || 42})</span>
+                        {item.rating != null ? (
+                          <>
+                            <Star size={13} fill="currentColor" />
+                            <span>{item.rating}</span>
+                            <span className="store-review-count">({item.reviewsCount ?? 0})</span>
+                          </>
+                        ) : (
+                          <span>New item - not yet rated</span>
+                        )}
                       </div>
                       <div className="store-product-price">
                         <strong>{item.price}</strong>
