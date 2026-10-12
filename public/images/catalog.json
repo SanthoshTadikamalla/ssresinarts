@@ -17,7 +17,7 @@
     "id": 2,
     "title": "Custom Couple Initial Monogram \"R&S\" Stand",
     "category": "Name Stands",
-    "price": "₹1,299",
+    "price": "₹899",
     "originalPrice": "₹1,699",
     "path": "/images/name stands/monogram_rs.jpg",
     "description": "High clarity crystal resin letters with real preserved red rose petals and 24K gold foil flakes.",
@@ -489,20 +489,6 @@
     "modelType": "stand"
   },
   {
-    "id": 36,
-    "title": "Rose Gold Resin Bangle",
-    "category": "Bangles",
-    "price": "₹899",
-    "originalPrice": "₹1,249",
-    "path": "/images/bangles/floral_bangle.jpg",
-    "description": "Rose-gold resin bangle with preserved florals, pearl shimmer, and a handcrafted premium finish.",
-    "badge": "New",
-    "rating": 4.9,
-    "reviewsCount": 57,
-    "is3DModelAvailable": true,
-    "modelType": "bangle"
-  },
-  {
     "id": 37,
     "title": "Custom Resin Ring Keepsake",
     "category": "Jewelry",
@@ -585,20 +571,6 @@
     "reviewsCount": 48,
     "is3DModelAvailable": true,
     "modelType": "frame"
-  },
-  {
-    "id": 43,
-    "title": "Golden Floral Keepsake Set",
-    "category": "Bangles",
-    "price": "₹1,099",
-    "originalPrice": "₹1,499",
-    "path": "/images/bangles/floral_bangle.jpg",
-    "description": "A golden resin keepsake set with premium floral detailing and refined gifting appeal.",
-    "badge": "Trending",
-    "rating": 4.8,
-    "reviewsCount": 42,
-    "is3DModelAvailable": true,
-    "modelType": "bangle"
   },
   {
     "id": 44,
