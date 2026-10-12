@@ -69,20 +69,7 @@
     "is3DModelAvailable": true,
     "modelType": "hamper"
   },
-  {
-    "id": 6,
-    "title": "Custom Resin Name Stand",
-    "category": "Name Stands",
-    "price": "599",
-    "originalPrice": "₹899",
-    "path": "/images/name stands/name stand.jpg",
-    "description": "Personalized resin name stand with preserved floral accents and a polished glass-like finish.",
-    "badge": "Best Seller",
-    "rating": 4.9,
-    "reviewsCount": 88,
-    "is3DModelAvailable": true,
-    "modelType": "stand"
-  },
+
   {
     "id": 7,
     "title": "Car Inside Mirror Resin Keepsake",
@@ -572,20 +559,7 @@
     "is3DModelAvailable": true,
     "modelType": "frame"
   },
-  {
-    "id": 44,
-    "title": "Heart Resin Mould Piece",
-    "category": "Photo Frames",
-    "price": "₹899",
-    "originalPrice": "₹1,249",
-    "path": "/images/photo frames/heart mould.jpeg",
-    "description": "A heart-shaped resin mould piece for custom keepsakes and handmade decor.",
-    "badge": "Fresh Drop",
-    "rating": 4.7,
-    "reviewsCount": 33,
-    "is3DModelAvailable": true,
-    "modelType": "keepsake"
-  },
+   
   {
     "id": 45,
     "title": "Premium Resin Gift Collection",
